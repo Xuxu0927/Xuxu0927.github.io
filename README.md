@@ -144,4 +144,4 @@ License
   is distributed under the
   [MIT License](https://opensource.org/licenses/MIT).
 * All content files are published under the
-  [CC BY 4.0 License](https://creativecommons.org/licenses/by/4.0/).
+  [CC BY 4.0 License](https://creativecommons.org/licenses/by/4.0/)
