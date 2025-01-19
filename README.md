@@ -1,147 +1,54 @@
-My Resume and LaTeX Template
-============================
+[![star](https://gitee.com/itsay/resume/badge/star.svg?theme=white)](https://gitee.com/itsay/resume/stargazers)    [![fork](https://gitee.com/itsay/resume/badge/fork.svg?theme=white)](https://gitee.com/itsay/resume/members)
 
-Introduction
-------------
-This repository holds my [resume](resume-zh+en.pdf) (Chinese and English) and
-the [LaTeX template](resume.cls).
+# 个人简历模板
 
-The LaTeX template is based on the
-[YACC: Another Awesome CV](https://github.com/darwiin/yaac-another-awesome-cv)
-by Christophe Roger, which is further based on the
-[Plasmati Graduate CV](https://www.latextemplates.com/template/plasmati-graduate-cv)
-by Alessandro Plasmati.
+[http://itsay.gitee.io/resume](http://itsay.gitee.io/resume)
 
-This template is also available on
-[Overleaf](https://www.overleaf.com/latex/templates/simple-resume-template-for-new-graduate-ying-jie-sheng-jian-li-mo-ban/hxrntvmmvnqt).
-Welcome to try it and report back.
+## Intro
 
-Usage
------
-* Linux
+此简历模板：
 
-  1. Install XeLaTeX, latexmk, GNU Make, and GhostScript packages;
-  2. Install the [required fonts](#required-fonts);
-  3. Replace `resume-zh.tex` and `resume-en.tex` with your versions;
-  4. Compile to PDFs with a simple `make` :-)
+- 内容上，来源于我本人真实求职经历以及参加多次网上简历培训总结而成
+- 风格上，参考众多简历风格，@DIYgod，@ekCit以及~~我自己的博客主题 [itsay.me](http://itsay.me)~~
 
-* Windows
+欢迎提issue或者star，ღ( ´･ᴗ･` )比心
 
-  1. Install [MiKTeX](https://miktex.org/);
-  2. Install the [required fonts](#required-fonts);
-  3. Replace `resume-zh.tex` and `resume-en.tex` with your versions;
-  4. Open `resume-*.tex` in TeXWorks, choose `XeLaTeX` to compile,
-     and confirm the prompts to install the missing packages along
-     the run.
+## Object
 
-* Docker or Podman
+前端求职/程序员求职
 
-  Just run `make docker` or `make podman`.
+## Usage
 
-Font Awesome 5
---------------
-**NOTE**:
-The [fontawesome5 package](https://www.ctan.org/pkg/fontawesome5) from CTAN
-is used, which is more advanced and bundles with the font files.
+1. 先Star/Fork本项目，然后Clone或者直接下载到本地
+2. 修改index.html内相关信息
+3. 微调样式（作为前端求职，这点应该不成问题）
+4. 生成pdf(开发中)
+5. 部署到线上
+6. 生成访问二维码（开发中）
+7. 祝您求职成功！
 
-The original [fontawesome5](fontawesome5/) contents are now obsolete but kept
-for reference.
+## Preview
 
-<blockquote>
+### PC端
+![](assets/images/pc.png)
 
-I wrote a simple tool [`make-fontawesome5.py`](fontawesome5/make-fontawesome5.py),
-which will download the latest icon list from the
-[Font Awesome](https://github.com/FortAwesome/Font-Awesome) project
-and then generate the LaTeX style file for using the latest
-**Font Awesome 5** fonts (the *free* edition) in LaTeX.
+### 移动端
+![](assets/images/ip.png)
 
-This Python script requires the [`PyYAML`](https://github.com/yaml/pyyaml)
-package, which can be installed with `pip3 install --user PyYAML`
-or `sudo apt install python3-yaml`.
+## TODO
+- [x] 左栏固定（切换）
+- [ ] 输出pdf功能
+- [ ] 可编辑
 
-A pre-generated style file [`fontawesome5.sty`](fontawesome5/fontawesome5.sty)
-(matches Font Awesome **v5.15.4**) is also provided.
+## ChangeLog
+- 2017.3.7 创建模板
+- 2017.3.12 移动端优化
+- 2017.12.20 修改部分内容
+- 2018.6.20 新增左栏固定功能（切换）
 
-The Font Awesome fonts are designed by the
-[Font Awesome project](https://fontawesome.com/)
-and can be obtained from [here](https://fontawesome.com/v5/download).
-**NOTE**:
-All the following 3 fonts should be installed into the system:
-* Font Awesome 5 Free
-  (generic icons in regular style, much less than the solid style)
-* Font Awesome 5 Free Solid
-  (generic icons in solid style)
-* Font Awesome 5 Free Brands
-  (various brand icons)
+## Acknowledgments
+- font-awesome提供字体图标
 
-i.e., the following 3 OTF files are needed:
-* `Font Awesome 5 Free-Regular-400.otf`
-* `Font Awesome 5 Free-Solid-900.otf`
-* `Font Awesome 5 Brands-Regular-400.otf`
+## LICENSE
 
-</blockquote>
-
-### Installation
-
-* Linux (Debian 12/bookworm)
-
-  - Method 1: Install the `texlive-fonts-extra` package, but it pulls off
-    lots of fonts and costs ~1.6GB disk space!
-  - Method 2: Manually install the `fontawesome5` package to `~/texmf`
-    with the `tlmgr` (TeX Live Manager) tool:
-    (1) initialize the user tree: `tlmgr --usermode init-usertree`;
-    (2) install the package: `tlmgr --usermode install fontawesome5`.
-
-* Windows (MiKTeX 22.10)
-
-  MiKTeX will auto prompt for the missing package, so just confirm to
-  install it.
-
-Required Fonts
---------------
-Besides the Font Awesome fonts, this template also requires the following
-opensource fonts:
-
-* [IBM Plex](https://github.com/IBM/plex) (Serif, Mono)
-
-  Download the `OpenType.zip` archive from the
-  [releases](https://github.com/IBM/plex/releases) page,
-  and then extract the `IBM-Plex-Serif` and `IBM-Plex-Mono` directories
-  and install them.
-
-* [Noto Serif CJK](https://github.com/notofonts/noto-cjk)
-
-  Download the `NotoSerifCJKsc.zip` archive
-  (Language Specific OTFs Simplified Chinese) from the
-  [releases](https://github.com/notofonts/noto-cjk/releases) page,
-  and then install all of them.
-
-On Debian Linux, simply do `apt install fonts-ibm-plex fonts-noto-cjk`.
-
-Of course, you can use the fonts you prefer by modifying the template directly.
-However, you may need to tweak the
-[column width `\leftcolwidth` in the template](resume.cls)
-accordingly.
-
-Fonts Installation
-------------------
-On **Linux** systems, create a directory for each font family under
-`~/.local/share/fonts`, then copy the font files (OTF or TTF) over,
-then execute `fc-cache -f` to refresh the font cache, done.
-
-Take the *Font Awesome* font family as an example:
-
-1. `mkdir -p ~/.local/share/fonts/FontAwesome`
-2. `cp <font-awesome-otf-files> ~/.local/share/fonts/FontAwesome/`
-3. `fc-cache -fv`
-4. check the fonts correctly installed: `fc-list | grep 'FontAwesome'`
-
-License
--------
-* The LaTeX class [`resume.cls`](resume.cls) is distributed under the
-  [LaTeX Project Public License (LPPL) Version 1.3c](https://www.latex-project.org/lppl.txt).
-* The tool [`make-fontawesome5.py`](fontawesome5/make-fontawesome5.py)
-  is distributed under the
-  [MIT License](https://opensource.org/licenses/MIT).
-* All content files are published under the
-  [CC BY 4.0 License](https://creativecommons.org/licenses/by/4.0/)
+MIT © [ITSAY](http://blog.if2er.com)
