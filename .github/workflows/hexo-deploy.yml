@@ -36,6 +36,6 @@ jobs:
           npx hexo generate
 
       - name: 部署到main分支
-        run: npx hexo deploy --repo https://${GITHUB_TOKEN}@github.com/Xuxu0927/Xuxu0927.github.io.git
+        run: npx hexo deploy --repo https://x-access-token:${GITHUB_TOKEN}@github.com/Xuxu0927/Xuxu0927.github.io.git
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
