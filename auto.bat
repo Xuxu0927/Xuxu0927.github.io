@@ -6,7 +6,7 @@ echo.
 
 :: 1. 切换到 source 分支（源码分支）
 echo [1/5] 切换到 source 源码分支...
-git checkout source
+git checkout yuanma
 echo.
 
 :: 2. Git 备份源码
@@ -15,7 +15,7 @@ git add .
 git commit -m "自动备份源码 %date% %time%"
 :: 如果没有文件修改，忽略报错
 if errorlevel 1 echo 无文件需要备份
-git push origin source
+git push origin yuanma
 echo.
 
 :: 3. 清理静态文件
