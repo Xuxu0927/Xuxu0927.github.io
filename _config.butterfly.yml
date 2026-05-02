@@ -13,7 +13,7 @@ menu:
   列表||fas fa-list:                # 带子菜单的菜单项
     音乐: /music/ || fas fa-music     # 音乐页面
     电影: /movies/ || fas fa-video    # 电影页面
-  友情链接: /link/ || fas fa-link     # 友链页面
+  友: /link/ || fas fa-link     # 友链页面
   关于我们: /about/ || fas fa-heart    # 关于页面
 
 # 导航栏外观设置
