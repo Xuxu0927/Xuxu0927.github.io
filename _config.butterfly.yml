@@ -85,8 +85,8 @@ avatar:                           # 头像设置
   effect: false                   # 头像是否启用旋转特效
 
 disable_top_img: false            # 是否禁用所有页面的顶部大图
-index_img: images/beijing.mp4         # 首页顶部大图（留空则用default_top_img）
-default_top_img: images/beijing.mp4     # 未单独设置top_img的页面的默认顶部图
+index_img: images/beijing.jpg         # 首页顶部大图（留空则用default_top_img）
+default_top_img: images/beijing.jpg     # 未单独设置top_img的页面的默认顶部图
 archive_img:                      # 归档页顶部大图
 tag_img:                          # 单个标签页（如/tags/xxx）的顶部图
 tag_per_img:                      # 按标签名单独指定顶部图，格式：标签名: 图片路径
