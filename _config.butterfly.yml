@@ -102,8 +102,8 @@ cover:                            # 文章封面设置
   # - https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg
 
 error_img:                        # 图片加载失败时的替换图
-  flink: /img/friend_404.gif      # 友链头像加载失败
-  post_page: /img/404.jpg         # 文章内图片加载失败
+  flink: images/friend_404.gif      # 友链头像加载失败
+  post_page: images/404.jpg         # 文章内图片加载失败
 
 error_404:                        # 自定义404页面
   enable: false
