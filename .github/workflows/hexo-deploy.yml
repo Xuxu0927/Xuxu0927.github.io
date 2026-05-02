@@ -1,11 +1,9 @@
 name: Hexo 自动部署
 
-# 触发规则：推送代码到 yuanma 分支自动执行
 on:
   push:
     branches: [ yuanma ]
 
-# 给工作流写入仓库的权限
 permissions:
   contents: write
 
@@ -13,32 +11,31 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: 拉取 yuanma 分支源码
+      - name: 拉取源码
         uses: actions/checkout@v4
         with:
           ref: yuanma
-          fetch-depth:0
 
-      - name: 设置 Node.js 24 版本
+      - name: 设置 Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 24.15.0
           cache: npm
 
-      - name: 安装项目依赖
+      - name: 安装依赖
         run: npm install
 
-      - name: 配置 Git 信息
+      - name: 配置Git
         run: |
           git config --global user.name "Xuxu0927"
           git config --global user.email "2889087473@qq.com"
 
-      - name: 清理并生成静态文件
+      - name: 生成静态文件
         run: |
           npx hexo clean
           npx hexo generate
 
-      - name: 部署到 main 分支
+      - name: 部署到main分支
         run: npx hexo deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
