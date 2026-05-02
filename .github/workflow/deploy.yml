@@ -1,0 +1,42 @@
+name: 自动部署 Hexo 博客 (SSH)
+
+on:
+  push:
+    branches:
+      - main   # 若你的默认分支是 master，请改为 master
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 拉取代码
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: 安装 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: 安装项目依赖
+        run: npm install
+
+      - name: 配置 Git 用户身份
+        run: |
+          git config --global user.name "Xuxu0927"
+          git config --global user.email "2889087473@qq.com"
+
+      - name: 添加 SSH 私钥 (Secret 名称 = a)
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.a }}
+
+      - name: 清理并生成静态文件
+        run: |
+          npx hexo clean
+          npx hexo generate
+
+      - name: 部署到 GitHub Pages
+        run: npx hexo deploy
