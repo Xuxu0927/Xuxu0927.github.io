@@ -10,10 +10,10 @@ menu:
   归档: /archives/ || fas fa-archive   # 文章归档页面
   标签: /tags/ || fas fa-tags          # 标签聚合页面
   目录: /categories/ || fas fa-folder-open  # 分类目录页面
-  列表||fas fa-list:                # 带子菜单的菜单项
+  列||fas fa-list:                # 带子菜单的菜单项
     音乐: /music/ || fas fa-music     # 音乐页面
     电影: /movies/ || fas fa-video    # 电影页面
-  友: /link/ || fas fa-link     # 友链页面
+  友111: /link/ || fas fa-link     # 友链页面
   关于我们: /about/ || fas fa-heart    # 关于页面
 
 # 导航栏外观设置
