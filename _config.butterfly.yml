@@ -400,7 +400,7 @@ canvas_nest:                      # 线条网络背景
   mobile: false
 
 activate_power_mode:              # 打字特效（类似Atom的Power Mode）
-  enable: true
+  enable: false
   colorful: true                  # 粒子特效
   shake: true                     # 抖动特效
   mobile: false
@@ -610,10 +610,8 @@ css_prefix: true                  # 是否添加CSS浏览器前缀
 
 # 注入自定义代码
 inject:
-  head:                           # 插入到</head>之前
-  # - <link rel="stylesheet" href="/xxx.css">
-  bottom:                         # 插入到</body>之前
-  # - <script src="xxxx"></script>
+  head:
+  bottom:
 
 # CDN配置（一般不动）
 CDN:
