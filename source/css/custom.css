@@ -97,16 +97,3 @@
     font-weight: bold;
     margin-right: 0.3em;
 }
-
-
-
-/* ... 你原有的其他样式 ... */
-
-/* 使用 !important 强制覆盖所有可能存在的背景样式 */
-#web_bg {
-    background-image: url('images/beijing2.png') !important;
-    background-size: cover !important;
-    background-repeat: no-repeat !important;
-    background-attachment: fixed !important;
-    background-position: center !important;
-}
