@@ -11,11 +11,8 @@ menu:
   归档: /archives/ || fas fa-archive
   标签: /tags/ || fas fa-tags
   目录: /categories/ || fas fa-folder-open
-  列表||fas fa-list:
-    音乐: /music/ || fas fa-music
-    电影: /movies/ || fas fa-video
   友链: /link/ || fas fa-link
-  关于我们: /about/ || fas fa-heart
+  关于我: /about/ || fas fa-heart
 
 # 导航栏外观
 nav:
@@ -95,7 +92,7 @@ error_404:
   background: https://i.loli.net/2020/05/19/aKOcLiyPl2JQdFD.png
 
 # 全局背景与动画
-background:                       # 网站全局背景
+background: images/beijing.jpg                      # 网站全局背景
 footer_bg: false                  # 页脚独立背景
 rightside-bottom:                 # 右下角按钮距底部距离
 enter_transitions: true           # 页面切换动画
@@ -125,7 +122,7 @@ canvas_nest:
 
 # 打字特效（Power Mode）
 activate_power_mode:
-  enable: false
+  enable: true
   colorful: true                  # 粒子特效
   shake: true                     # 抖动特效
   mobile: false
@@ -151,10 +148,10 @@ ClickShowText:
 
 # 字体设置
 font:
-  global-font-size:
-  code-font-size:
-  font-family:
-  code-font-family:
+  global-font-size: 
+  code-font-size: 
+  font-family: 
+  code-font-family: 
 
 # 博客标题字体
 blog_title_font:
@@ -287,7 +284,7 @@ related_post:
 photofigcaption: false
 
 # 文章分页导航
-post_pagination: 1
+post_pagination: false
 
 # 文章过期提醒
 noticeOutdate:
@@ -687,6 +684,7 @@ inject:
   bottom:
       - <div id="xf-MusicPlayer" data-cdnName="https://player.xfyun.club/js"  data-themeColor="xf-original"></div>
         <script src="https://player.xfyun.club/js/xf-MusicPlayer/js/xf-MusicPlayer.min.js"></script>
+      - <script src="/js/random-bg.js"></script>
 
 # CDN 配置
 CDN:
