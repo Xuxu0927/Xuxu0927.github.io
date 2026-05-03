@@ -91,7 +91,7 @@ error_404:
   background: https://i.loli.net/2020/05/19/aKOcLiyPl2JQdFD.png
 
 # 全局背景与动画
-background: images/beijing.jpg                      # 网站全局背景
+background: images                # 网站全局背景
 footer_bg: false                  # 页脚独立背景
 rightside-bottom:                 # 右下角按钮距底部距离
 enter_transitions: true           # 页面切换动画
@@ -193,8 +193,8 @@ beautify:
 
 # 加载动画
 preloader:
-  enable: true
-  source: 1                       # 1:全屏动画, 2:进度条
+  enable: false
+  source: 2                       # 1:全屏动画, 2:进度条
   pace_css_url:
 
 # 主页副标题（打字机效果）
@@ -592,8 +592,6 @@ docsearch:
 pjax:
   enable: true
   exclude:
-    - /categories/
-    - /tags/
 
 # 图片懒加载
 lazyload:

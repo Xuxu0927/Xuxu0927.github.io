@@ -1,11 +1,18 @@
 /* =============================================================================
    Butterfly 主题自定义样式
    文件：custom.css
-   说明：仅调整结构，添加注释，未改变任何样式规则
    ========================================================================== */
 
-/* ============================= 导航栏（顶部栏） ============================= */
+/* ============================= 全局背景图片 ============================= */
+#web_bg {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    background-color: #f0f0f0;          /* 可选：JS 加载前的默认背景色 */
+}
 
+/* ============================= 导航栏（顶部栏） ============================= */
 /* 固定导航栏背景（亮色模式） */
 #page-header.nav-fixed #nav {
     background: rgba(246, 239, 246, 0.61) !important;
@@ -30,8 +37,50 @@
     backdrop-filter: blur(8px) !important;
 }
 
-/* ============================= 手机侧边栏 ============================= */
+/* ============================= 顶栏完全透明 ============================= */
+/* 覆盖所有可能产生背景的元素（包括文章页的 post-bg 类） */
+#page-header,
+#page-header.post-bg,
+#nav,
+#nav *,
+.nav-fixed #nav {
+    background: transparent !important;
+    background-color: transparent !important;
+}
 
+/* ============================= 消除顶栏与内容之间的分割线 ============================= */
+/* 1. 移除所有伪元素（渐变阴影、装饰线等） */
+#page-header:before,
+#page-header:after,
+#page-header.post-bg:before,
+#page-header.post-bg:after {
+    display: none !important;
+    content: none !important;
+}
+
+/* 2. 移除边框、阴影等视觉分割元素 */
+#page-header,
+#page-header.post-bg {
+    box-shadow: none !important;
+    border-bottom: none !important;
+    outline: none !important;
+}
+
+/* 3. 重置底部边距与内边距，防止空白缝隙 */
+#page-header {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* 4. 确保文章内容区域紧贴顶部，无间隙 */
+.layout_page,
+#post,
+.post-content {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+/* ============================= 手机侧边栏 ============================= */
 /* 侧边栏菜单打开时的背景（亮色模式） */
 #sidebar #sidebar-menus.open {
     background: rgba(246, 239, 246, 0.75) !important;
@@ -47,7 +96,6 @@
 }
 
 /* ============================= 右下角按钮 ============================= */
-
 /* 右侧功能按钮（配置、评论、上下、阅读模式、翻译、隐藏侧边栏） */
 #rightside > #rightside-config-show > #rightside_config,
 #rightside > #rightside-config-show > #to_comment,
@@ -73,7 +121,6 @@
 }
 
 /* ============================= 本地搜索弹窗 ============================= */
-
 /* 搜索弹窗容器与输入框背景（亮色模式） */
 #local-search .search-dialog,
 #local-search .search-dialog .local-search-box input {
@@ -91,7 +138,6 @@
 }
 
 /* ============================= 文章标题自动编号 ============================= */
-
 /* 重置文章正文内的标题计数器 */
 .post-content {
     counter-reset: h1counter;
@@ -132,8 +178,14 @@
     margin-right: 0.3em;
 }
 
-/* ============================= 页脚（footer） ============================= */
+/* 针对关于页面（或其他普通页面）关闭自动编号 */
+#page .post-content h1:before,
+#page .post-content h2:before,
+#page .post-content h3:before {
+    display: none !important;
+}
 
+/* ============================= 页脚（footer） ============================= */
 /* 页脚区域完全透明（已选用） */
 #footer {
     background: transparent !important;
@@ -163,56 +215,10 @@
     color: var(--font-color);
 }
 
-
-/* ----------------------------- 全局背景图片（由 JS 动态设置） ----------------------------- */
-#web_bg {
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-    background-position: center;
-    /* 可选：设置一个默认背景色，避免 JS 加载前空白 */
-    background-color: #f0f0f0;
-}
-
-/* ----------------------------- 顶栏完全透明 ----------------------------- */
-/* 覆盖所有可能产生背景的元素（包括文章页的 post-bg 类） */
-#page-header,
-#page-header.post-bg,
-#nav,
-#nav *,
-.nav-fixed #nav {
-    background: transparent !important;
-    background-color: transparent !important;
-}
-
-/* ----------------------------- 消除顶栏与内容之间的分割线 ----------------------------- */
-/* 1. 移除所有伪元素（渐变阴影、装饰线等） */
-#page-header:before,
-#page-header:after,
-#page-header.post-bg:before,
-#page-header.post-bg:after {
-    display: none !important;
-    content: none !important;
-}
-
-/* 2. 移除边框、阴影等视觉分割元素 */
-#page-header,
-#page-header.post-bg {
-    box-shadow: none !important;
-    border-bottom: none !important;
-    outline: none !important;
-}
-
-/* 3. 重置底部边距与内边距，防止空白缝隙 */
-#page-header {
-    margin-bottom: 0 !important;
-    padding-bottom: 0 !important;
-}
-
-/* 4. 确保文章内容区域紧贴顶部，无间隙 */
-.layout_page,
-#post,
-.post-content {
-    margin-top: 0 !important;
-    padding-top: 0 !important;
+/* ============================= 导航菜单文字放大 ============================= */
+/* 统一放大顶栏所有文字（包括搜索按钮） */
+#nav a,
+#search-button a {
+    font-size: 21px !important;
+    font-weight: 500 !important;
 }
