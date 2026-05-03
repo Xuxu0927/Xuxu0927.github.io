@@ -32,7 +32,7 @@ social:
 footer:
   owner:
     enable: true                  # 是否显示站点作者/起始年份
-    since: 2020                   # 起始年份
+    since:                        # 留空，不显示起始年份
   custom_text:                    # 自定义页脚文字
   copyright: true                 # 显示主题和框架版权信息
 
@@ -67,8 +67,8 @@ busuanzi:
 
 # 顶部大图（全局）
 disable_top_img: false            # 是否禁用所有页面的顶部大图
-index_img: images/beijing2.png    # 首页顶部大图（留空则用default_top_img）
-default_top_img: images/beijing2.png  # 未单独设置top_img的页面的默认顶部图
+index_img:                        # 首页顶部大图（留空则用default_top_img）
+default_top_img:                  # 未单独设置top_img的页面的默认顶部图
 archive_img:                      # 归档页顶部大图
 tag_img:                          # 单个标签页（如/tags/xxx）的顶部图
 tag_per_img:                      # 按标签名单独指定顶部图
@@ -95,7 +95,7 @@ error_404:
   background: https://i.loli.net/2020/05/19/aKOcLiyPl2JQdFD.png
 
 # 全局背景与动画
-background: images/beijing2.png   # 网站全局背景
+background:                       # 网站全局背景
 footer_bg: false                  # 页脚独立背景
 rightside-bottom:                 # 右下角按钮距底部距离
 enter_transitions: true           # 页面切换动画
@@ -111,7 +111,7 @@ canvas_ribbon:
 
 # 动态彩带背景
 canvas_fluttering_ribbon:
-  enable: false
+  enable: true
   mobile: false
 
 # 线条网络背景
@@ -167,10 +167,15 @@ hr_icon:
   icon:
   icon-top:
 
-# 主题颜色自定义（可选）
-# theme_color:
-#   enable: true
-#   main: "#49B1F5"
+#主题颜色自定义（可选）
+theme_color:
+  enable: true                      # 开启主题颜色自定义
+  main: "#6C5CE7"                   # 主题主色调：控制导航栏高亮、链接、按钮、标签等主要元素（优雅淡紫）
+  paginator: "#A8A4FF"              # 分页器颜色：控制首页/归档页的“上一页/下一页”激活状态的颜色（柔和淡紫蓝）
+  button_hover: "#5A4BCF"           # 按钮悬浮色：鼠标悬停在按钮上时的背景/边框颜色（深一点的紫色）
+  text_selection: "#E8E2FF"         # 文本选中背景色：用户用鼠标选中文字时的高亮颜色（淡紫白）
+  link_color: "#4A69BD"             # 普通链接颜色：文章正文中未特殊定义的超链接颜色（沉稳的蓝色）
+  meta_color: "#95A5A6"             # 元数据颜色：文章发布日期、分类、标签、阅读量等附属信息的文字颜色（中性灰绿）
 
 # 首页顶部图高度等微调
 index_site_info_top:
@@ -185,14 +190,14 @@ display_mode: light
 
 # 文章标题美化
 beautify:
-  enable: false
+  enable: true
   field: post
   title-prefix-icon:
   title-prefix-icon-color:
 
 # 加载动画
 preloader:
-  enable: false
+  enable: true
   source: 1                       # 1:全屏动画, 2:进度条
   pace_css_url:
 
@@ -207,7 +212,6 @@ subtitle:
 # 图片灯箱
 medium_zoom: false
 fancybox: true
-
 
 # =================================== 文章与内容 ===================================
 
@@ -257,7 +261,7 @@ toc:
 
 # 文章版权信息
 post_copyright:
-  enable: true
+  enable: false
   decode: false
   author_href:
   license: CC BY-NC-SA 4.0
@@ -619,7 +623,7 @@ snackbar:
 
 # APlayer 音乐播放器注入
 aplayerInject:
-  enable: false
+  enable: true
   per_page: true
 
 # Mermaid 图表
@@ -679,6 +683,7 @@ css_prefix: true
 # 自定义代码注入
 inject:
   head:
+      - <link rel="stylesheet" href="/css/custom.css">
   bottom:
 
 # CDN 配置
