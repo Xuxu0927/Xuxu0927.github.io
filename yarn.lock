@@ -843,11 +843,6 @@ hexo-generator-tag@^2.0.0:
   dependencies:
     hexo-pagination "3.0.0"
 
-hexo-heading-numbering@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.npmjs.org/hexo-heading-numbering/-/hexo-heading-numbering-1.0.1.tgz"
-  integrity sha512-0Og1ehO7k/nufb6fk5s6wyQmmLakI0fu3eGlnmWP9DVgzDSSTbQG2TSTgXaKEULIotXsO2WVnoJ2xlO0PGRCSQ==
-
 hexo-i18n@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmmirror.com/hexo-i18n/-/hexo-i18n-1.0.0.tgz"

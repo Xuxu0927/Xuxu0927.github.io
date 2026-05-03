@@ -69,3 +69,28 @@
 	border-radius: 6px 6px;
 }
 /*******************************************************/
+
+
+
+
+/* 文章内标题自动编号 */
+.post-content {
+    counter-reset: title1;
+}
+.post-content h2 {
+    counter-reset: title2;
+    counter-increment: title1;
+}
+.post-content h2:before {
+    content: counter(title1) ". ";
+    color: #6C5CE7;
+    font-weight: bold;
+}
+.post-content h3 {
+    counter-increment: title2;
+}
+.post-content h3:before {
+    content: counter(title1) "." counter(title2) ". ";
+    color: #A8A4FF;
+    font-weight: bold;
+}
