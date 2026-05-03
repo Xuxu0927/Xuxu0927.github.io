@@ -1,7 +1,5 @@
 ---
 title: 示例文章
-categories: 
-  - 技术
 ---
 # Quick Start
 

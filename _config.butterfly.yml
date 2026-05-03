@@ -460,7 +460,7 @@ aside:
 
 # 最新文章卡片
   card_recent_post:
-    enable: true
+    enable: false
     limit: 5
     sort: date
     sort_order:
@@ -483,7 +483,7 @@ aside:
 
 # 归档卡片
   card_archives:
-    enable: true
+    enable: false
     type: monthly
     format: MMMM YYYY
     order: -1
