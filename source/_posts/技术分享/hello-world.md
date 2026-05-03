@@ -1,5 +1,11 @@
 ---
-title: 示例文章
+title: Hello World
+date: 2026-05-03
+categories:
+  - 技术分享
+tags:
+  - 技术分享tag
+cover: /images/cover.jpg   # 使用绝对路径
 ---
 # Quick Start
 
