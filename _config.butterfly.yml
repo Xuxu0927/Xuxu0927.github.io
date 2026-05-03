@@ -592,8 +592,8 @@ docsearch:
 pjax:
   enable: true
   exclude:
-    - /music/
-    - /movies/
+    - /categories/
+    - /tags/
 
 # 图片懒加载
 lazyload:
