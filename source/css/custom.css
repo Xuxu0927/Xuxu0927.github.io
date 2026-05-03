@@ -70,27 +70,43 @@
 }
 /*******************************************************/
 
-
-
-
-/* 文章内标题自动编号 */
+/* 文章正文容器重置计数器 */
 .post-content {
-    counter-reset: title1;
+    counter-reset: h2counter;
 }
+
+/* 一级标题 (H2) 编号 */
 .post-content h2 {
-    counter-reset: title2;
-    counter-increment: title1;
+    counter-reset: h3counter;
+    counter-increment: h2counter;
 }
 .post-content h2:before {
-    content: counter(title1) ". ";
-    color: #6C5CE7;
+    content: counter(h2counter) ". ";
+    color: #6C5CE7;          /* 可自行修改颜色，留空则用主题色 */
     font-weight: bold;
+    margin-right: 0.3em;
 }
+
+/* 二级标题 (H3) 编号 */
 .post-content h3 {
-    counter-increment: title2;
+    counter-increment: h3counter;
 }
 .post-content h3:before {
-    content: counter(title1) "." counter(title2) ". ";
-    color: #A8A4FF;
+    content: counter(h2counter) "." counter(h3counter) ". ";
+    color: #A8A4FF;          /* 可自行修改颜色 */
     font-weight: bold;
+    margin-right: 0.3em;
+}
+
+
+
+/* ... 你原有的其他样式 ... */
+
+/* 使用 !important 强制覆盖所有可能存在的背景样式 */
+#web_bg {
+    background-image: url('images/beijing2.png') !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-attachment: fixed !important;
+    background-position: center !important;
 }

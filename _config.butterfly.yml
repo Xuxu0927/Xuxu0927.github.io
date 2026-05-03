@@ -190,10 +190,10 @@ display_mode: light
 
 # 文章标题美化
 beautify:
-  enable: true
+  enable: false
   field: post
-  title-prefix-icon:
-  title-prefix-icon-color:
+  title-prefix-icon: '⭐' 
+  title-prefix-icon-color: '#f1c40f'
 
 # 加载动画
 preloader:
