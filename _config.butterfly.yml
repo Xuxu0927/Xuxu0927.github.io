@@ -622,9 +622,9 @@ snackbar:
   bg_dark: '#1f1f1f'
 
 # APlayer 音乐播放器注入
-aplayerInject:
-  enable: true
-  per_page: true
+# aplayerInject:
+#  enable: true
+#  per_page: true
 
 # Mermaid 图表
 mermaid:
@@ -685,6 +685,8 @@ inject:
   head:
       - <link rel="stylesheet" href="/css/custom.css">
   bottom:
+      - <div id="xf-MusicPlayer" data-cdnName="https://player.xfyun.club/js"  data-themeColor="xf-original"></div>
+        <script src="https://player.xfyun.club/js/xf-MusicPlayer/js/xf-MusicPlayer.min.js"></script>
 
 # CDN 配置
 CDN:

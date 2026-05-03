@@ -36,3 +36,20 @@ $ hexo deploy
 ```
 
 More info: [Deployment](https://hexo.io/docs/one-command-deployment.html)
+
+
+
+## 是的
+
+```python
+score = int(input('输入分数:\n'))
+if score >= 90:
+    grade = 'A'
+elif score >= 60:
+    grade = 'B'
+else:
+    grade = 'C'
+ 
+print ('%d 属于 %s' % (score,grade))
+```
+
