@@ -219,6 +219,6 @@
 /* 统一放大顶栏所有文字（包括搜索按钮） */
 #nav a,
 #search-button a {
-    font-size: 21px !important;
+    font-size: 16px !important;
     font-weight: 500 !important;
 }
