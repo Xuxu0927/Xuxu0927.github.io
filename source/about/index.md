@@ -3,7 +3,7 @@ title: 关于我
 date: 2026-05-03 15:00:00
 type: "about"
 layout: "about"
-comments: false
+comments: true
 ---
 
 # 关于我：

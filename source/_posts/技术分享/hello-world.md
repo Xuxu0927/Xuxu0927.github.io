@@ -5,7 +5,6 @@ categories:
   - 技术分享
 tags:
   - 技术分享tag
-cover: /images/cover.jpg   # 使用绝对路径
 ---
 # Quick Start
 
