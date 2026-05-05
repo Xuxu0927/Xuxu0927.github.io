@@ -103,7 +103,7 @@ relative_link: false
 # 发布未来的文章
 future: true
 
-# 代码高亮（已禁用，改用 PrismJS）
+# # 代码高亮（已禁用，改用 PrismJS）
 # highlight:
 #   enable: false
 #   line_number: false
@@ -112,12 +112,12 @@ future: true
 #   wrap: false
 #   hljs: false
 
-# PrismJS 代码高亮配置
-prismjs:
-  enable: true        # 启用 PrismJS
-  preprocess: true    # 预处理
-  line_number: true   # 显示行号
-  tab_replace: ''     # 替换制表符
+# # PrismJS 代码高亮配置
+# prismjs:
+#   enable: false        # 启用 PrismJS
+#   preprocess: true    # 预处理
+#   line_number: true   # 显示行号
+#   tab_replace: ''     # 替换制表符
 
 
 # =================================== 首页与分页 ===================================

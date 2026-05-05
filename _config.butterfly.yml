@@ -147,10 +147,10 @@ ClickShowText:
 
 # 字体设置
 font:
-  global-font-size: 
-  code-font-size: 
-  font-family: 
-  code-font-family: 
+  global-font-size: 16px
+  code-font-size: 16px
+  font-family: 'Noto Sans SC'
+  code-font-family: 'Consolas'
 
 # 博客标题字体
 blog_title_font:
@@ -275,12 +275,12 @@ post_edit:
 
 # 相关文章推荐
 related_post:
-  enable: true
+  enable: false
   limit: 6
   date_type: updated
 
 # 图片描述显示
-photofigcaption: false
+photofigcaption: true
 
 # 文章分页导航
 post_pagination: false
@@ -535,14 +535,15 @@ rightside_item_order:
 
 # =================================== 代码与数学 ===================================
 
-# 代码高亮主题
-highlight_theme: mac light
-highlight_copy: true              # 复制按钮
-highlight_lang: true              # 显示语言
-highlight_shrink: false           # 收缩状态
-highlight_height_limit: false     # 高度限制
-code_word_wrap: true              # 自动换行
-code_block_line_numbers: true     # 显示行号
+# 代码高亮
+highlight_theme: mac light          # 主题: darker/pale night/light/ocean/mac
+highlight_theme_macStyle: true      # Mac风格代码块（仅mac主题生效）
+highlight_copy: true                # 复制按钮
+highlight_lang: true                # 显示语言标签
+highlight_shrink: false             # 收缩代码块（true/false）
+highlight_height_limit: false       # 高度限制（px/false）
+code_word_wrap: true                # 自动换行
+code_block_line_numbers: true       # 显示行号
 
 # 复制内容设置
 copy:

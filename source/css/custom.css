@@ -95,30 +95,6 @@
     border-radius: 6px 0 0 6px;
 }
 
-/* ============================= 右下角按钮 ============================= */
-/* 右侧功能按钮（配置、评论、上下、阅读模式、翻译、隐藏侧边栏） */
-#rightside > #rightside-config-show > #rightside_config,
-#rightside > #rightside-config-show > #to_comment,
-#rightside > #rightside-config-show > #go-up,
-#rightside > #rightside-config-show > #go-down,
-#rightside > #rightside-config-hide > #readmode,
-#rightside > #rightside-config-hide > #translateLink,
-#rightside > #rightside-config-hide > #hide-aside-btn {
-    background: opacity(0.3);
-    backdrop-filter: blur(3px);
-}
-
-/* 暗色模式下的右侧按钮（同样保持半透明模糊） */
-[data-theme=dark] #rightside > #rightside-config-show > #rightside_config,
-[data-theme=dark] #rightside > #rightside-config-show > #to_comment,
-[data-theme=dark] #rightside > #rightside-config-show > #go-up,
-[data-theme=dark] #rightside > #rightside-config-show > #go-down,
-[data-theme=dark] #rightside > #rightside-config-hide > #readmode,
-[data-theme=dark] #rightside > #rightside-config-hide > #translateLink,
-[data-theme=dark] #rightside > #rightside-config-hide > #hide-aside-btn {
-    background: opacity(0.3);
-    backdrop-filter: blur(3px);
-}
 
 /* ============================= 本地搜索弹窗 ============================= */
 /* 搜索弹窗容器与输入框背景（亮色模式） */
