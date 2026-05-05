@@ -137,7 +137,7 @@
     counter-increment: h2counter;
 }
 .post-content h2:before {
-    content: counter(h1counter) "." counter(h2counter) ". ";
+    content: counter(h1counter) "." counter(h2counter) "  ";
     color: #A8A4FF;
     font-weight: bold;
     margin-right: 0.3em;
@@ -148,7 +148,7 @@
     counter-increment: h3counter;
 }
 .post-content h3:before {
-    content: counter(h1counter) "." counter(h2counter) "." counter(h3counter) ". ";
+    content: counter(h1counter) "." counter(h2counter) "." counter(h3counter) "  ";
     color: #95A5A6;
     font-weight: bold;
     margin-right: 0.3em;
