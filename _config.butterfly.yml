@@ -680,8 +680,8 @@ inject:
   head:
       - <link rel="stylesheet" href="/css/custom.css">
   bottom:
-      - <div id="xf-MusicPlayer" data-cdnName="https://player.xfyun.club/js"  data-themeColor="xf-original"></div>
-        <script src="https://player.xfyun.club/js/xf-MusicPlayer/js/xf-MusicPlayer.min.js"></script>
+      #- <div id="xf-MusicPlayer" data-cdnName="https://player.xfyun.club/js"  data-themeColor="xf-original"></div>
+      #  <script src="https://player.xfyun.club/js/xf-MusicPlayer/js/xf-MusicPlayer.min.js"></script>
       - <script src="/js/random-bg.js"></script>
 
 # CDN 配置
