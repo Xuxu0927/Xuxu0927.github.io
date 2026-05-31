@@ -72,6 +72,10 @@ jobs:
           npx hexo generate
 
       - name: 部署到 main 分支
-        run: npx hexo deploy --repo https://x-access-token:${GITHUB_TOKEN}@github.com/Xuxu0927/Xuxu0927.github.io.git
+        run: |
+          # hexo deploy 内部会创建 .deploy_git 仓库，需要 git 身份
+          git config --global user.name "Xuxu0927"
+          git config --global user.email "2889087473@qq.com"
+          npx hexo deploy --repo https://x-access-token:${GITHUB_TOKEN}@github.com/Xuxu0927/Xuxu0927.github.io.git
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
