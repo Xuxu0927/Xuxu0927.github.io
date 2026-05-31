@@ -222,9 +222,31 @@ def fetch_show_hn():
 # 生成 Hexo Markdown
 # ============================================================
 
+# ============================================================
+# 各类新闻源的中文简介
+# ============================================================
+
+SOURCE_INTROS = {
+    "🚀 Hacker News 热门": (
+        "Hacker News 是 Y Combinator 旗下的知名技术社区，由硅谷创业教父 Paul Graham 创立。"
+        "这里汇集了全球开发者关注的科技话题、技术文章和行业讨论，是了解技术趋势的绝佳窗口。"
+    ),
+    "💡 Show HN 精选项目": (
+        "Show HN 是 Hacker News 上的特色栏目，供开发者展示自己打造的项目和产品。"
+        "从开源工具到创意应用，这里每天都有令人眼前一亮的创新作品涌现。"
+    ),
+    "📦 GitHub Trending": (
+        "GitHub Trending 展示了当日最受关注的开源仓库，按 star 增长速度排序。"
+        "涵盖 AI 大模型、开发工具、框架库等热门领域，是发现优秀开源项目的最佳途径。"
+    ),
+}
+
+
 def generate_hexo_post(articles_by_source, target_date):
     """
     将新闻数据生成 Hexo 兼容的 Markdown 文件。
+    每篇文章包含一级标题（H1）、中文简介，以及结构清晰的二级/三级标题，
+    配合 Butterfly 主题的 toc.number 自动标号功能。
 
     articles_by_source: [(source_name, [articles]), ...]
     target_date: datetime.date 对象
@@ -244,15 +266,38 @@ def generate_hexo_post(articles_by_source, target_date):
     lines.append("categories: 科技资讯")
     lines.append("---")
     lines.append("")
+
+    # === 一级标题（必须，配合 TOC 自动标号） ===
+    lines.append(f"# 每日科技新闻 - {date_str}")
+    lines.append("")
+
+    # === 概览信息 ===
     lines.append(f"> 📰 自动化抓取于 {datetime.now(TZ_BEIJING).strftime('%Y-%m-%d %H:%M')} (北京时间)")
     lines.append(f"> 📊 共收录 **{total}** 条科技新闻")
     lines.append("")
+
+    # === 中文简介 ===
+    lines.append(
+        "本文每日自动汇总来自 **Hacker News**、**Show HN** 和 **GitHub Trending** "
+        "的热门科技资讯，涵盖人工智能、开源项目、开发工具、行业动态等多个领域，"
+        "帮助你在忙碌中快速了解全球技术圈的最新动向与热门讨论。"
+    )
+    lines.append("")
+
     lines.append("<!-- more -->")
     lines.append("")
 
+    # === 各新闻源板块 ===
     for source_name, articles in articles_by_source:
         lines.append(f"## {source_name}")
         lines.append("")
+
+        # 中文简介
+        intro = SOURCE_INTROS.get(source_name)
+        if intro:
+            lines.append(f"> {intro}")
+            lines.append("")
+
         for a in articles:
             lines.append(f"### [{a['title']}]({a['url']})")
             lines.append("")
@@ -265,7 +310,10 @@ def generate_hexo_post(articles_by_source, target_date):
     lines.append("")
     lines.append("---")
     lines.append("")
-    lines.append("*本文由自动化脚本每日生成，如有问题请 [提交 Issue](https://github.com/Xuxu0927/Xuxu0927.github.io/issues)。*")
+    lines.append(
+        "*本文由自动化脚本每日生成，如有问题请 "
+        "[提交 Issue](https://github.com/Xuxu0927/Xuxu0927.github.io/issues)。*"
+    )
 
     content = "\n".join(lines)
 
