@@ -4,9 +4,8 @@ on:
   push:
     branches: [ yuanma ]
   schedule:
-    # 每天北京时间 08:57 (UTC 00:57) 自动抓取科技新闻并部署
-    # 错开整点，避免 GitHub Actions 高峰
-    - cron: '57 0 * * *'
+    # 每天北京时间 07:00 (UTC 23:00) 自动抓取科技新闻并部署
+    - cron: '0 23 * * *'
   # 允许手动触发
   workflow_dispatch:
 
