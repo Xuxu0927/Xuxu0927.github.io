@@ -1,8 +1,14 @@
-name: Hexo 自动部署
+name: Hexo 自动部署 + 每日科技新闻
 
 on:
   push:
     branches: [ yuanma ]
+  schedule:
+    # 每天北京时间 08:57 (UTC 00:57) 自动抓取科技新闻并部署
+    # 错开整点，避免 GitHub Actions 高峰
+    - cron: '57 0 * * *'
+  # 允许手动触发
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -11,11 +17,47 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
+      # ============================================================
+      # 阶段 1: 拉取源码
+      # ============================================================
       - name: 拉取源码
         uses: actions/checkout@v4
         with:
           ref: yuanma
 
+      # ============================================================
+      # 阶段 2: 抓取每日科技新闻
+      # ============================================================
+      - name: 设置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 抓取科技新闻
+        run: python fetch_tech_news.py
+
+      # 如果有新生成的 MD 文件，提交回 yuanma 分支保存
+      # 使用 GITHUB_TOKEN 推送不会触发递归 workflow
+      - name: 提交新闻源文件
+        run: |
+          git config user.name "TechNewsBot"
+          git config user.email "bot@xuxu0927.github.io"
+
+          # 只添加新生成的每日新闻文件
+          git add source/_posts/
+
+          if git diff --cached --quiet; then
+            echo "📭 无新增新闻，跳过提交"
+          else
+            TODAY=$(date +%Y-%m-%d)
+            git commit -m "📰 每日科技新闻 - ${TODAY}" -m "自动抓取并生成 ${TODAY} 的科技新闻"
+            git push origin yuanma
+            echo "✅ 新闻源文件已推送"
+          fi
+
+      # ============================================================
+      # 阶段 3: 构建 & 部署 Hexo
+      # ============================================================
       - name: 设置 Node.js
         uses: actions/setup-node@v4
         with:
@@ -25,17 +67,12 @@ jobs:
       - name: 安装依赖
         run: npm install
 
-      - name: 配置Git
-        run: |
-          git config --global user.name "Xuxu0927"
-          git config --global user.email "2889087473@qq.com"
-
       - name: 生成静态文件
         run: |
           npx hexo clean
           npx hexo generate
 
-      - name: 部署到main分支
+      - name: 部署到 main 分支
         run: npx hexo deploy --repo https://x-access-token:${GITHUB_TOKEN}@github.com/Xuxu0927/Xuxu0927.github.io.git
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
