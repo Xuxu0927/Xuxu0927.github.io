@@ -28,6 +28,33 @@ REQUEST_TIMEOUT = 15  # 秒
 # 北京时间
 TZ_BEIJING = timezone(timedelta(hours=8))
 
+# AI 相关关键词（用于筛选 HN 文章，使用单词边界匹配避免误伤）
+AI_KEYWORDS = [
+    # 单字母缩写（单词边界匹配，防止误伤）
+    "AI", "LLM", "AGI", "RAG", "RLHF", "TTS", "VLM",
+    # 公司/产品名
+    "OpenAI", "ChatGPT", "GPT-4", "GPT-5", "Claude", "Anthropic",
+    "Gemini", "DeepMind", "LLaMA", "Mistral", "Copilot", "Cursor",
+    "Codex", "Grok", "Perplexity", "Midjourney",
+    "Stable Diffusion", "DALL-E", "Sora",
+    # 技术术语（复合词优先，避免单词过宽）
+    "large language model", "language model", "vision model",
+    "world model", "AI agent", "AI model",
+    "machine learning", "deep learning", "neural network",
+    "reinforcement learning", "fine-tuning",
+    "transformer", "diffusion model", "generative AI",
+    "artificial intelligence",
+    "text-to-speech", "speech synthesis",
+    "tokenizer", "embedding model",
+    "AI safety", "AI alignment", "AI regulation",
+    "AI coding", "AI programming", "coding agent",
+    "humanoid robot", "AI hardware", "AI chip",
+    "autonomous vehicle", "self-driving",
+    "vector database", "prompt engineering",
+    "multi-modal", "multimodal",
+    "neural", "inference engine",
+]
+
 # ============================================================
 # 工具函数
 # ============================================================
@@ -91,7 +118,10 @@ def fetch_hacker_news():
         articles.append({
             "title": title,
             "url": url,
-            "summary": f"Hacker News 热度: {score} 分 | {comments} 条讨论",
+            "summary": (
+                f"该文章在 Hacker News 上获得 **{score}** 点热度，"
+                f"共有 **{comments}** 条评论讨论。"
+            ),
             "source": "Hacker News",
         })
 
@@ -99,8 +129,120 @@ def fetch_hacker_news():
     return articles
 
 # ============================================================
-# 新闻源 2: GitHub Trending
+# 新闻源 2: AI 热点资讯（从 HN 中筛选 AI 相关文章）
 # ============================================================
+
+def fetch_ai_news():
+    """
+    从 Hacker News 热门中筛选 AI 相关的文章和讨论。
+    获取更多文章（50 篇），按 AI 关键词匹配标题。
+    """
+    print("[INFO] 正在抓取 AI 热点资讯...")
+
+    ids = fetch_json("https://hacker-news.firebaseio.com/v0/topstories.json")
+    if not ids:
+        print("  [FAIL] 无法获取 Hacker News 列表")
+        return []
+
+    articles = []
+    for item_id in ids[:50]:  # 获取更多以便筛选
+        item = fetch_json(f"https://hacker-news.firebaseio.com/v0/item/{item_id}.json")
+        if not item:
+            continue
+        if item.get("type") != "story":
+            continue
+
+        title = item.get("title", "")
+        title_lower = title.lower()
+        # 检查标题是否包含 AI 关键词（单词边界匹配，避免误伤）
+        matched = False
+        for kw in AI_KEYWORDS:
+            kw_lower = kw.lower()
+            # 复合词（含空格）：直接用 in 匹配
+            if " " in kw_lower:
+                if kw_lower in title_lower:
+                    matched = True
+                    break
+            else:
+                # 单词/缩写：用正则单词边界匹配
+                if re.search(r'\b' + re.escape(kw_lower) + r'\b', title_lower):
+                    matched = True
+                    break
+        if not matched:
+            continue
+
+        url = item.get("url", f"https://news.ycombinator.com/item?id={item_id}")
+        score = item.get("score", 0)
+        comments = item.get("descendants", 0)
+        articles.append({
+            "title": title,
+            "url": url,
+            "summary": (
+                f"该文章聚焦人工智能领域，"
+                f"在 Hacker News 上获得 **{score}** 点热度，"
+                f"共有 **{comments}** 条评论讨论。"
+            ),
+            "source": "AI 热点",
+        })
+
+        if len(articles) >= MAX_NEWS_PER_SOURCE:
+            break
+
+    print(f"  [OK] AI 热点资讯: {len(articles)} 篇")
+    return articles
+
+
+# ============================================================
+# 新闻源 3: GitHub Trending
+# ============================================================
+
+# ============================================================
+# 编程语言名称中英对照
+# ============================================================
+
+LANG_NAMES = {
+    "Python": "Python",
+    "JavaScript": "JavaScript",
+    "TypeScript": "TypeScript",
+    "Java": "Java",
+    "Go": "Go",
+    "Rust": "Rust",
+    "C++": "C++",
+    "C": "C 语言",
+    "C#": "C#",
+    "Ruby": "Ruby",
+    "Swift": "Swift",
+    "Kotlin": "Kotlin",
+    "PHP": "PHP",
+    "HTML": "HTML",
+    "CSS": "CSS",
+    "Shell": "Shell 脚本",
+    "Vue": "Vue",
+    "Jupyter Notebook": "Jupyter Notebook",
+    "Dart": "Dart",
+    "Scala": "Scala",
+    "Lua": "Lua",
+    "R": "R 语言",
+    "Zig": "Zig",
+    "MDX": "MDX",
+}
+
+
+def format_github_summary(lang, stars, desc):
+    """生成 GitHub 项目的中文摘要。"""
+    parts = []
+    # 编程语言
+    if lang:
+        lang_cn = LANG_NAMES.get(lang, lang)
+        parts.append(f"编程语言：**{lang_cn}**")
+    # Stars
+    if stars:
+        parts.append(f"⭐ **{stars}**")
+    # 描述（英文原文）
+    if desc:
+        parts.append(f"简介：{desc}")
+    return " | ".join(parts) if parts else "GitHub 今日热门仓库"
+
 
 def fetch_github_trending():
     """
@@ -175,7 +317,7 @@ def fetch_github_trending():
         articles.append({
             "title": title,
             "url": f"https://github.com/{full_name}",
-            "summary": " | ".join(tag_parts) if tag_parts else "GitHub 今日热门仓库",
+            "summary": format_github_summary(lang, stars, desc),
             "source": "GitHub Trending",
         })
 
@@ -211,7 +353,10 @@ def fetch_show_hn():
         articles.append({
             "title": title,
             "url": url,
-            "summary": f"Show HN | 热度: {score} 分 | {comments} 条讨论",
+            "summary": (
+                f"该项目由开发者在 Hacker News 的 Show HN 栏目展示，"
+                f"获得 **{score}** 点热度，共有 **{comments}** 条讨论反馈。"
+            ),
             "source": "Show HN",
         })
 
@@ -227,6 +372,11 @@ def fetch_show_hn():
 # ============================================================
 
 SOURCE_INTROS = {
+    "🤖 AI 热点资讯": (
+        "从全球技术社区中精选的人工智能相关热门文章与讨论。"
+        "涵盖大语言模型（LLM）、AI Agent、机器学习、深度学习、"
+        "计算机视觉、语音合成等前沿领域，让你第一时间了解 AI 圈的最新进展与趋势。"
+    ),
     "🚀 Hacker News 热门": (
         "Hacker News 是 Y Combinator 旗下的知名技术社区，由硅谷创业教父 Paul Graham 创立。"
         "这里汇集了全球开发者关注的科技话题、技术文章和行业讨论，是了解技术趋势的绝佳窗口。"
@@ -278,9 +428,9 @@ def generate_hexo_post(articles_by_source, target_date):
 
     # === 中文简介 ===
     lines.append(
-        "本文每日自动汇总来自 **Hacker News**、**Show HN** 和 **GitHub Trending** "
-        "的热门科技资讯，涵盖人工智能、开源项目、开发工具、行业动态等多个领域，"
-        "帮助你在忙碌中快速了解全球技术圈的最新动向与热门讨论。"
+        "本文每日自动汇总全球技术圈的热门资讯：优先呈现 **AI 人工智能** 领域的最新动态，"
+        "随后是 **Hacker News** 与 **Show HN** 的精选讨论，最后展示 **GitHub Trending** "
+        "热门开源项目，帮助你快速掌握技术前沿。"
     )
     lines.append("")
 
@@ -341,17 +491,29 @@ def main():
     # 抓取所有来源
     all_news = []
 
-    # 1. Hacker News
+    # 1. AI 热点资讯（优先展示）
+    ai_articles = fetch_ai_news()
+    if ai_articles:
+        all_news.append(("🤖 AI 热点资讯", ai_articles))
+
+    # 收集 AI 板块已收录的 URL，避免后续板块重复
+    ai_urls = {a["url"] for a in ai_articles} if ai_articles else set()
+
+    # 2. Hacker News 热门（排除已在 AI 板块出现的文章）
     hn_articles = fetch_hacker_news()
     if hn_articles:
-        all_news.append(("🚀 Hacker News 热门", hn_articles))
+        hn_articles = [a for a in hn_articles if a["url"] not in ai_urls]
+        if hn_articles:
+            all_news.append(("🚀 Hacker News 热门", hn_articles))
 
-    # 2. Show HN
+    # 3. Show HN 精选项目（排除已在 AI 板块出现的项目）
     show_articles = fetch_show_hn()
     if show_articles:
-        all_news.append(("💡 Show HN 精选项目", show_articles))
+        show_articles = [a for a in show_articles if a["url"] not in ai_urls]
+        if show_articles:
+            all_news.append(("💡 Show HN 精选项目", show_articles))
 
-    # 3. GitHub Trending
+    # 4. GitHub Trending
     gh_articles = fetch_github_trending()
     if gh_articles:
         all_news.append(("📦 GitHub Trending", gh_articles))

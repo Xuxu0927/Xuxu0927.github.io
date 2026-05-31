@@ -72,12 +72,12 @@
     padding-bottom: 0 !important;
 }
 
-/* 4. 确保文章内容区域紧贴顶部，无间隙 */
+/* 4. 文章内容区域：保留顶部间距，避免被导航栏遮挡 */
 .layout_page,
 #post,
 .post-content {
     margin-top: 0 !important;
-    padding-top: 0 !important;
+    padding-top: 20px !important;
 }
 
 /* ============================= 手机侧边栏 ============================= */
@@ -113,13 +113,13 @@
     border-radius: 6px 6px;
 }
 
-/* ============================= 文章标题自动编号 ============================= */
-/* 重置文章正文内的标题计数器 */
+/* ============================= 文章标题自动编号（已禁用） ============================= */
+/* 如需重新启用，取消下面的注释即可 */
+/*
 .post-content {
     counter-reset: h1counter;
 }
 
-/* 一级标题（H1）编号 */
 .post-content h1 {
     counter-reset: h2counter;
     counter-increment: h1counter;
@@ -131,7 +131,6 @@
     margin-right: 0.3em;
 }
 
-/* 二级标题（H2）编号（带父级H1序号） */
 .post-content h2 {
     counter-reset: h3counter;
     counter-increment: h2counter;
@@ -143,7 +142,6 @@
     margin-right: 0.3em;
 }
 
-/* 三级标题（H3）编号（带H1、H2序号） */
 .post-content h3 {
     counter-increment: h3counter;
 }
@@ -154,12 +152,12 @@
     margin-right: 0.3em;
 }
 
-/* 针对关于页面（或其他普通页面）关闭自动编号 */
 #page .post-content h1:before,
 #page .post-content h2:before,
 #page .post-content h3:before {
     display: none !important;
 }
+*/
 
 /* ============================= 页脚（footer） ============================= */
 /* 页脚区域完全透明（已选用） */
