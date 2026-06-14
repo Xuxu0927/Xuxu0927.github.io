@@ -1,0 +1,198 @@
+/* =============================================================================
+   Butterfly 主题自定义样式
+   文件：custom.css
+   ========================================================================== */
+
+/* ============================= 全局背景图片 ============================= */
+#web_bg {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    background-color: #f0f0f0;          /* 可选：JS 加载前的默认背景色 */
+}
+
+/* ============================= 导航栏（顶部栏） ============================= */
+/* 固定导航栏背景（亮色模式） */
+#page-header.nav-fixed #nav {
+    background: rgba(246, 239, 246, 0.61) !important;
+    backdrop-filter: blur(8px) !important;
+}
+
+/* 固定导航栏背景（暗色模式） */
+[data-theme=dark] #page-header.nav-fixed #nav {
+    background: rgba(79, 76, 79, 0.35) !important;
+    backdrop-filter: blur(8px) !important;
+}
+
+/* 展开的菜单栏背景（亮色模式） */
+#nav .show {
+    background: rgba(246, 239, 246, 0.61) !important;
+    backdrop-filter: blur(8px) !important;
+}
+
+/* 展开的菜单栏背景（暗色模式） */
+[data-theme=dark] #nav .show {
+    background: rgba(79, 76, 79, 0.35) !important;
+    backdrop-filter: blur(8px) !important;
+}
+
+/* ============================= 顶栏完全透明 ============================= */
+/* 覆盖所有可能产生背景的元素（包括文章页的 post-bg 类） */
+#page-header,
+#page-header.post-bg,
+#nav,
+#nav *,
+.nav-fixed #nav {
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+/* ============================= 消除顶栏与内容之间的分割线 ============================= */
+/* 1. 移除所有伪元素（渐变阴影、装饰线等） */
+#page-header:before,
+#page-header:after,
+#page-header.post-bg:before,
+#page-header.post-bg:after {
+    display: none !important;
+    content: none !important;
+}
+
+/* 2. 移除边框、阴影等视觉分割元素 */
+#page-header,
+#page-header.post-bg {
+    box-shadow: none !important;
+    border-bottom: none !important;
+    outline: none !important;
+}
+
+/* 3. 重置底部边距与内边距，防止空白缝隙 */
+#page-header {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* 4. 文章内容区域：保留顶部间距，避免被导航栏遮挡 */
+.layout_page,
+#post,
+.post-content {
+    margin-top: 0 !important;
+    padding-top: 20px !important;
+}
+
+/* ============================= 手机侧边栏 ============================= */
+/* 侧边栏菜单打开时的背景（亮色模式） */
+#sidebar #sidebar-menus.open {
+    background: rgba(246, 239, 246, 0.75) !important;
+    backdrop-filter: blur(3px);
+    border-radius: 6px 0 0 6px;
+}
+
+/* 侧边栏菜单打开时的背景（暗色模式） */
+[data-theme=dark] #sidebar #sidebar-menus.open {
+    background: rgba(252, 224, 252, 0.11) !important;
+    backdrop-filter: blur(3px);
+    border-radius: 6px 0 0 6px;
+}
+
+
+/* ============================= 本地搜索弹窗 ============================= */
+/* 搜索弹窗容器与输入框背景（亮色模式） */
+#local-search .search-dialog,
+#local-search .search-dialog .local-search-box input {
+    background: rgba(246, 239, 246, 0.75) !important;
+    backdrop-filter: blur(3px);
+    border-radius: 6px 6px;
+}
+
+/* 搜索弹窗容器与输入框背景（暗色模式） */
+[data-theme=dark] #local-search .search-dialog,
+[data-theme=dark] #local-search .search-dialog .local-search-box input {
+    background: rgba(252, 224, 252, 0.2) !important;
+    backdrop-filter: blur(3px);
+    border-radius: 6px 6px;
+}
+
+/* ============================= 文章标题自动编号（已禁用） ============================= */
+/* 如需重新启用，取消下面的注释即可 */
+/*
+.post-content {
+    counter-reset: h1counter;
+}
+
+.post-content h1 {
+    counter-reset: h2counter;
+    counter-increment: h1counter;
+}
+.post-content h1:before {
+    content: counter(h1counter) ". ";
+    color: #6C5CE7;
+    font-weight: bold;
+    margin-right: 0.3em;
+}
+
+.post-content h2 {
+    counter-reset: h3counter;
+    counter-increment: h2counter;
+}
+.post-content h2:before {
+    content: counter(h1counter) "." counter(h2counter) "  ";
+    color: #A8A4FF;
+    font-weight: bold;
+    margin-right: 0.3em;
+}
+
+.post-content h3 {
+    counter-increment: h3counter;
+}
+.post-content h3:before {
+    content: counter(h1counter) "." counter(h2counter) "." counter(h3counter) "  ";
+    color: #95A5A6;
+    font-weight: bold;
+    margin-right: 0.3em;
+}
+
+#page .post-content h1:before,
+#page .post-content h2:before,
+#page .post-content h3:before {
+    display: none !important;
+}
+*/
+
+/* ============================= 页脚（footer） ============================= */
+/* 页脚区域完全透明（已选用） */
+#footer {
+    background: transparent !important;
+}
+
+/* 以下是半透明毛玻璃效果的备选样式（未启用，仅作参考） */
+/*
+#footer {
+    background: rgba(255,255,255,.15);
+    color: #000;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+    backdrop-filter: saturate(100%) blur(5px)
+}
+#footer::before {
+    background: rgba(255,255,255,.15)
+}
+*/
+
+/* 页脚内文字颜色（继承主题变量） */
+#footer #footer-wrap {
+    color: var(--font-color);
+}
+
+/* 页脚内链接颜色（继承主题变量） */
+#footer #footer-wrap a {
+    color: var(--font-color);
+}
+
+/* ============================= 导航菜单文字放大 ============================= */
+/* 统一放大顶栏所有文字（包括搜索按钮） */
+#nav a,
+#search-button a {
+    font-size: 16px !important;
+    font-weight: 500 !important;
+}
