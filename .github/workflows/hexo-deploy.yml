@@ -1,10 +1,10 @@
-name: Hexo 自动部署 + 每日科技新闻
+name: Hexo 自动部署 + 每日热门新闻
 
 on:
   push:
     branches: [ yuanma ]
   schedule:
-    # 每天北京时间 07:00 (UTC 23:00) 自动抓取科技新闻并部署
+    # 每天北京时间 07:00 (UTC 23:00) 自动抓取热门新闻并部署
     - cron: '0 23 * * *'
   # 允许手动触发
   workflow_dispatch:
@@ -25,14 +25,14 @@ jobs:
           ref: yuanma
 
       # ============================================================
-      # 阶段 2: 抓取每日科技新闻
+      # 阶段 2: 抓取每日热门新闻
       # ============================================================
       - name: 设置 Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: 抓取科技新闻
+      - name: 抓取热门新闻
         run: python fetch_tech_news.py
 
       # 如果有新生成的 MD 文件，提交回 yuanma 分支保存
@@ -49,7 +49,7 @@ jobs:
             echo "📭 无新增新闻，跳过提交"
           else
             TODAY=$(date +%Y-%m-%d)
-            git commit -m "📰 每日科技新闻 - ${TODAY}" -m "自动抓取并生成 ${TODAY} 的科技新闻"
+            git commit -m "📰 每日热门新闻 - ${TODAY}" -m "自动抓取并生成 ${TODAY} 的热门新闻"
             git push origin yuanma
             echo "✅ 新闻源文件已推送"
           fi
