@@ -4,7 +4,8 @@
 从多个免费数据源获取当日最火热的新闻与项目，生成 Hexo 兼容的 Markdown 文件。
 
 数据来源:
-  - Hacker News Top Stories (hacker-news.firebaseio.com) — 全球技术社区最热讨论
+  - Google News RSS + Reddit /r/all — 全球最火热点事件
+  - Hacker News Top Stories (hacker-news.firebaseio.com) — 技术社区最热讨论
   - Hacker News Show HN (hacker-news.firebaseio.com) — 开发者展示精选
   - GitHub Trending (github.com/trending) — 当日最火开源仓库
 
@@ -16,12 +17,14 @@ import urllib.request
 import urllib.error
 import re
 import os
+import xml.etree.ElementTree as ET
 from datetime import datetime, timezone, timedelta
 
 # ============================================================
 # 配置
 # ============================================================
 BLOG_SOURCE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "source", "_posts")
+MAX_GLOBAL_HOT = 10      # 全球热点事件最多取几条
 MAX_HN_TOP = 15          # Hacker News 热门最多取几条
 MAX_SHOW_HN = 10         # Show HN 最多取几条
 MAX_GH_TRENDING = 10     # GitHub Trending 最多取几条
@@ -56,7 +59,141 @@ def fetch_html(url):
         return None
 
 # ============================================================
-# 新闻源 1: Hacker News 最热头条（主力来源）
+# 新闻源 0: 全球最火热点事件（优先展示）
+# ============================================================
+
+def fetch_global_hot_news():
+    """
+    从多个全球新闻源抓取当日最火热点事件。
+
+    数据来源（均免费，无需 API Key）：
+      1. Google News RSS — 全球头条新闻
+      2. Reddit /r/all — 全站最热帖子（补充来源）
+
+    去重合并后返回 Top N。
+    """
+    print("[INFO] 正在抓取全球最火热点事件...")
+
+    articles = []
+    seen_urls = set()
+    seen_titles = set()
+
+    def add_article(title, url, summary, source_label):
+        """去重添加文章。"""
+        # URL 去重
+        if url in seen_urls:
+            return
+        # 标题高度相似去重
+        title_key = re.sub(r'\s+', ' ', title.lower()).strip()
+        title_key = re.sub(r'[^\w\s]', '', title_key)
+        if title_key in seen_titles:
+            return
+        seen_urls.add(url)
+        seen_titles.add(title_key)
+        articles.append({
+            "title": title,
+            "url": url,
+            "summary": summary,
+            "source": source_label,
+        })
+
+    # ---- 来源 A: Google News 全球头条 (RSS) ----
+    print("  [INFO] 尝试 Google News RSS...")
+    google_rss_urls = [
+        # 美国版（全球视野）
+        "https://news.google.com/rss?hl=en-US&gl=US&ceid=US:en",
+        # 国际版
+        "https://news.google.com/rss?hl=en&gl=US&ceid=US:en&topic=w",
+    ]
+
+    for rss_url in google_rss_urls:
+        if len(articles) >= MAX_GLOBAL_HOT:
+            break
+        try:
+            req = urllib.request.Request(rss_url, headers={"User-Agent": USER_AGENT})
+            with urllib.request.urlopen(req, timeout=REQUEST_TIMEOUT) as resp:
+                xml_text = resp.read().decode("utf-8")
+            root = ET.fromstring(xml_text)
+
+            for item in root.iter("item"):
+                if len(articles) >= MAX_GLOBAL_HOT:
+                    break
+                title_elem = item.find("title")
+                link_elem = item.find("link")
+                source_elem = item.find("source")
+
+                title = title_elem.text.strip() if title_elem is not None and title_elem.text else ""
+                link = link_elem.text.strip() if link_elem is not None and link_elem.text else ""
+                source_name = source_elem.text.strip() if source_elem is not None and source_elem.text else "Google News"
+
+                if not title or not link:
+                    continue
+
+                # Google News 的 link 包含 " - " 分隔标题和来源，需要清理
+                # 标题通常已包含来源信息，如 "Title - Source"
+                if " - " in title:
+                    parts = title.rsplit(" - ", 1)
+                    if len(parts) == 2 and len(parts[0]) > 10:
+                        title = parts[0]
+
+                add_article(
+                    title, link,
+                    f"来源：{source_name}｜该新闻位列 Google News 全球头条，"
+                    f"是当日最受关注的国际热点事件之一。",
+                    "Google News 全球头条"
+                )
+        except Exception as e:
+            print(f"  [WARN] Google News RSS 请求失败: {e}")
+
+    google_count = len(articles)
+    print(f"  [OK] Google News: {google_count} 条")
+
+    # ---- 来源 B: Reddit /r/all 全站最热（补充） ----
+    if len(articles) < MAX_GLOBAL_HOT:
+        print("  [INFO] 尝试 Reddit /r/all 热门（补充）...")
+        try:
+            reddit_url = "https://www.reddit.com/r/all/hot.json?limit=25"
+            data = fetch_json(reddit_url)
+            if data and "data" in data:
+                for child in data["data"]["children"]:
+                    if len(articles) >= MAX_GLOBAL_HOT:
+                        break
+                    post = child.get("data", {})
+                    title = post.get("title", "")
+                    permalink = post.get("permalink", "")
+                    subreddit = post.get("subreddit_name_prefixed", "reddit")
+                    score = post.get("score", 0)
+                    num_comments = post.get("num_comments", 0)
+
+                    if not title or not permalink:
+                        continue
+
+                    # 跳过置顶帖和过于短的内容
+                    if post.get("stickied", False):
+                        continue
+                    if len(title) < 10:
+                        continue
+
+                    url = f"https://www.reddit.com{permalink}"
+
+                    add_article(
+                        title, url,
+                        f"来源：{subreddit} ｜🔥 **{score}** 热度，"
+                        f"💬 **{num_comments}** 讨论 | 该帖位列 Reddit 全站热门，"
+                        f"代表全球网友当下最关注的讨论话题。",
+                        "Reddit 全网最热"
+                    )
+                print(f"  [OK] Reddit: {len(articles) - google_count} 条补充")
+        except Exception as e:
+            print(f"  [WARN] Reddit 请求失败: {e}")
+
+    total = min(len(articles), MAX_GLOBAL_HOT)
+    print(f"  [OK] 全球热点事件共: {total} 条")
+    return articles[:MAX_GLOBAL_HOT]
+
+
+# ============================================================
+# 新闻源 1: Hacker News 最热头条
 # ============================================================
 
 def fetch_hacker_news_top():
@@ -265,6 +402,11 @@ def fetch_github_trending():
 # ============================================================
 
 SOURCE_INTROS = {
+    "🌍 全球最火热点": (
+        "从 Google News 全球头条与 Reddit 全站热门中精选的当日 Top 10 热点事件。"
+        "覆盖国际要闻、科技突破、社会话题、娱乐文化等各领域，"
+        "让你第一时间了解全世界此刻正在关注什么。"
+    ),
     "🔥 Hacker News 最热头条": (
         "Hacker News 是 Y Combinator 旗下的知名技术社区，由硅谷创业教父 Paul Graham 创立。"
         "这里汇集了全球开发者当日最关注的科技话题与行业讨论——不设主题过滤，"
@@ -299,7 +441,7 @@ def generate_hexo_post(articles_by_source, target_date):
     lines.append("---")
     lines.append(f"title: 每日热门新闻 - {date_str}")
     lines.append(f"date: {date_str}")
-    lines.append("tags: [热门新闻, 技术资讯, HackerNews, GitHub]")
+    lines.append("tags: [热门新闻, 全球热点, 技术资讯, HackerNews, GitHub]")
     lines.append("categories: 热门资讯")
     lines.append("---")
     lines.append("")
@@ -315,9 +457,9 @@ def generate_hexo_post(articles_by_source, target_date):
 
     # 中文简介
     lines.append(
-        "本文每日自动汇总全球技术圈最火热的资讯：首先为你带来 **Hacker News** 当日热度最高的头条讨论，"
-        "随后是 **Show HN** 开发者展示精选，最后附上 **GitHub Trending** "
-        "当日最火开源项目，帮你快速掌握技术圈今日焦点。"
+        "本文每日自动汇总全球最火资讯：首先为你带来 🌍 **全球最火十大热点事件**，覆盖国际要闻、科技突破、"
+        "社会话题等各领域；随后是 **Hacker News** 当日技术圈最热讨论、"
+        "**Show HN** 开发者展示精选，以及 **GitHub Trending** 当日最火开源项目。"
     )
     lines.append("")
 
@@ -376,7 +518,12 @@ def main():
 
     all_news = []
 
-    # 1. Hacker News 最热头条（主力，不做关键词过滤）
+    # 0. 🌍 全球最火热点事件（优先展示）
+    global_hot = fetch_global_hot_news()
+    if global_hot:
+        all_news.append(("🌍 全球最火热点", global_hot))
+
+    # 1. Hacker News 最热头条
     hn_top = fetch_hacker_news_top()
     if hn_top:
         all_news.append(("🔥 Hacker News 最热头条", hn_top))
