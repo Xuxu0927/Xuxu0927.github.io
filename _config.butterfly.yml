@@ -10,6 +10,8 @@ menu:
   首页: / || fas fa-home
   归档: /archives/ || fas fa-archive
   分类: /categories/ || fas fa-folder-open
+  标签: /tags/ || fas fa-tags
+  友链: /link/ || fas fa-link
   关于我: /about/ || fas fa-heart
 
 # 导航栏外观
@@ -89,7 +91,7 @@ error_404:
   background: https://i.loli.net/2020/05/19/aKOcLiyPl2JQdFD.png
 
 # 全局背景与动画
-background: images                # 网站全局背景
+background: images/beijing/beijing1.jpg   # 网站全局背景（默认图，随机切换由 /js/random-bg.js 完成）
 footer_bg: false                  # 页脚独立背景
 rightside-bottom:                 # 右下角按钮距底部距离
 enter_transitions: true           # 页面切换动画

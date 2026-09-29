@@ -1,0 +1,22 @@
+# ==============================================================================
+# 友情链接数据（Butterfly 主题「友链」页面）
+# 文档：https://butterfly.js.org/posts/ceeb73f/#友链页
+#
+# 使用方法：按下方结构填写友链信息，取消注释即可。
+#   class_name  分组名称
+#   class_desc  分组描述（可选）
+#   flink_style 展示样式：flexcard（卡片式）/ 留空（默认列表式）
+#   link_list   该分组下的友链列表
+#     - name    站点名称
+#       link    站点链接
+#       avatar  头像链接（可选）
+#       descr   站点描述（可选）
+# ==============================================================================
+
+- class_name: 友情链接
+  class_desc: 欢迎互加友链
+  link_list:
+    # - name: 示例博客
+    #   link: https://example.com
+    #   avatar: https://example.com/avatar.png
+    #   descr: 这是一个示例友链
