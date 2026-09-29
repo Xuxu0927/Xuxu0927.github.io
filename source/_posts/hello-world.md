@@ -52,3 +52,16 @@ else:
 print ('%d 属于 %s' % (score,grade))
 ```
 
+
+$$
+C_1 \quad= \quad c_2 + c_4^3
+$$
+
+$$
+\begin{bmatrix}
+1&2&3\\\
+4&5&6\\\
+7&8&9
+\end{bmatrix}
+$$
+
